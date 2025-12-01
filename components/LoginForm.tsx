@@ -53,10 +53,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div className="z-10 w-full max-w-md p-8 space-y-8 bg-gray-800/30 backdrop-blur-md rounded-2xl border border-gray-700/50 shadow-2xl shadow-black/20">
+    <div className="z-10 w-full max-w-md p-8 space-y-8 bg-white/30 dark:bg-gray-800/30 backdrop-blur-md rounded-2xl border border-gray-300/50 dark:border-gray-700/50 shadow-2xl shadow-black/20">
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-100 tracking-wider">LOGIN</h1>
-        <p className="mt-2 text-sm text-gray-400">Enter your credentials to access your account</p>
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 tracking-wider">LOGIN</h1>
+        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Enter your credentials to access your account</p>
       </div>
       
       <form className="space-y-6" onSubmit={handleSubmit}>
@@ -71,7 +71,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
             name="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="block w-full py-3 pl-10 pr-3 bg-gray-900/50 border border-gray-700/50 rounded-lg text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
+            className="block w-full py-3 pl-10 pr-3 bg-gray-200/50 dark:bg-gray-900/50 border border-gray-300 dark:border-gray-700/50 rounded-lg text-gray-900 dark:text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
             placeholder="Username"
             required
             autoComplete="username"
@@ -89,7 +89,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="block w-full py-3 pl-10 pr-10 bg-gray-900/50 border border-gray-700/50 rounded-lg text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
+            className="block w-full py-3 pl-10 pr-10 bg-gray-200/50 dark:bg-gray-900/50 border border-gray-300 dark:border-gray-700/50 rounded-lg text-gray-900 dark:text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
             placeholder="Password"
             required
             autoComplete="current-password"
@@ -97,7 +97,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-300 transition-colors"
+            className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
             aria-label={showPassword ? 'Hide password' : 'Show password'}
           >
             {showPassword ? (
@@ -109,7 +109,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
         </div>
 
         {error && (
-          <div className="flex items-center justify-center p-2 space-x-2 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400" role="alert">
+          <div className="flex items-center justify-center p-2 space-x-2 bg-red-500/10 border border-red-500/30 rounded-lg text-red-600 dark:text-red-400" role="alert">
             <AlertIcon className="w-5 h-5 flex-shrink-0" />
             <p className="text-sm font-medium">{error}</p>
           </div>
@@ -117,7 +117,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
 
         <div className="flex items-center justify-between">
             <div className="text-sm">
-                <a href="#" className="font-medium text-blue-400 hover:text-blue-300 transition-colors">
+                <a href="#" className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">
                     Forgot your password?
                 </a>
             </div>
@@ -128,7 +128,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 overflow-hidden"
+            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 dark:focus:ring-offset-gray-900 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 overflow-hidden"
           >
             <span className="absolute left-0 top-0 h-full w-0 bg-white/10 transition-all duration-300 group-hover:w-full"></span>
             <span className="relative flex items-center justify-center h-5">
@@ -145,9 +145,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
         </div>
       </form>
       
-      <div className="text-sm text-center text-gray-400">
+      <div className="text-sm text-center text-gray-600 dark:text-gray-400">
         Don't have an account?{' '}
-        <a href="#" className="font-medium text-blue-400 hover:text-blue-300 transition-colors">
+        <a href="#" className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">
           Sign Up
         </a>
       </div>
