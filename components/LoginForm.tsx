@@ -13,61 +13,17 @@ interface LoginFormProps {
 const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const [passwordStrength, setPasswordStrength] = useState('');
-  const [isPasswordTooltipVisible, setIsPasswordTooltipVisible] = useState(false);
-
-
-  const checkPasswordStrength = (pass: string) => {
-    if (!pass) {
-      setPasswordStrength('');
-      return;
-    }
-  
-    const hasLetters = /[a-zA-Z]/.test(pass);
-    const hasNumbers = /[0-9]/.test(pass);
-    const hasSymbols = /[^a-zA-Z0-9]/.test(pass);
-  
-    if (pass.length < 8) {
-      setPasswordStrength('Weak');
-    } else if (hasLetters && hasNumbers && hasSymbols) {
-      setPasswordStrength('Strong');
-    } else if ((hasLetters && hasNumbers) || (hasLetters && hasSymbols) || (hasNumbers && hasSymbols)) {
-      setPasswordStrength('Medium');
-    } else {
-      setPasswordStrength('Weak'); // Long but not complex
-    }
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-    checkPasswordStrength(newPassword);
-  };
-
-  const getStrengthColor = () => {
-    switch (passwordStrength) {
-      case 'Weak': return 'text-red-400';
-      case 'Medium': return 'text-yellow-400';
-      case 'Strong': return 'text-green-400';
-      default: return 'text-gray-400';
-    }
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!username || !password || !confirmPassword) {
-      setError('Please fill in all fields.');
+    if (!username || !password) {
+      setError('Please enter both username and password.');
       return;
     }
-    if (password !== confirmPassword) {
-      setError('Passwords do not match.');
-      return;
-    }
+    
     setError('');
     setIsSubmitting(true);
 
@@ -99,8 +55,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
   return (
     <div className="z-10 w-full max-w-md p-8 space-y-8 bg-gray-800/30 backdrop-blur-md rounded-2xl border border-gray-700/50 shadow-2xl shadow-black/20">
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-100 tracking-wider">CREATE ACCOUNT</h1>
-        <p className="mt-2 text-sm text-gray-400">Create a new account to get started</p>
+        <h1 className="text-4xl font-bold text-gray-100 tracking-wider">LOGIN</h1>
+        <p className="mt-2 text-sm text-gray-400">Enter your credentials to access your account</p>
       </div>
       
       <form className="space-y-6" onSubmit={handleSubmit}>
@@ -123,17 +79,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
         </div>
 
         {/* Password Input */}
-        <div 
-          className="relative"
-          onMouseEnter={() => setIsPasswordTooltipVisible(true)}
-          onMouseLeave={() => setIsPasswordTooltipVisible(false)}
-        >
-          {isPasswordTooltipVisible && passwordStrength && (
-            <div className={`absolute -top-10 left-1/2 -translate-x-1/2 w-max px-3 py-1.5 text-xs font-semibold rounded-md shadow-lg bg-gray-900 border border-gray-700 ${getStrengthColor()} transition-opacity duration-300 z-20`}>
-                Password Strength: {passwordStrength}
-              <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-x-4 border-x-transparent border-t-4 border-t-gray-700"></div>
-            </div>
-          )}
+        <div className="relative">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <LockIcon className="w-5 h-5 text-gray-500" />
           </div>
@@ -142,11 +88,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
             id="password"
             name="password"
             value={password}
-            onChange={handlePasswordChange}
+            onChange={(e) => setPassword(e.target.value)}
             className="block w-full py-3 pl-10 pr-10 bg-gray-900/50 border border-gray-700/50 rounded-lg text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
             placeholder="Password"
             required
-            autoComplete="new-password"
+            autoComplete="current-password"
           />
           <button
             type="button"
@@ -161,37 +107,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
             )}
           </button>
         </div>
-        
-        {/* Confirm Password Input */}
-        <div className="relative">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <LockIcon className="w-5 h-5 text-gray-500" />
-          </div>
-          <input
-            type={showConfirmPassword ? 'text' : 'password'}
-            id="confirm-password"
-            name="confirm-password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className="block w-full py-3 pl-10 pr-10 bg-gray-900/50 border border-gray-700/50 rounded-lg text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
-            placeholder="Confirm Password"
-            required
-            autoComplete="new-password"
-          />
-          <button
-            type="button"
-            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-300 transition-colors"
-            aria-label={showConfirmPassword ? 'Hide confirm password' : 'Show confirm password'}
-          >
-            {showConfirmPassword ? (
-              <EyeSlashIcon className="w-5 h-5" />
-            ) : (
-              <EyeIcon className="w-5 h-5" />
-            )}
-          </button>
-        </div>
-
 
         {error && (
           <div className="flex items-center justify-center p-2 space-x-2 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400" role="alert">
@@ -199,6 +114,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
             <p className="text-sm font-medium">{error}</p>
           </div>
         )}
+
+        <div className="flex items-center justify-between">
+            <div className="text-sm">
+                <a href="#" className="font-medium text-blue-400 hover:text-blue-300 transition-colors">
+                    Forgot your password?
+                </a>
+            </div>
+        </div>
 
         {/* Submit Button */}
         <div>
@@ -213,7 +136,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
                 <div className="w-5 h-5 border-2 border-white rounded-full border-t-transparent animate-spin"></div>
               ) : (
                 <>
-                  Sign Up
+                  Login
                   <ArrowRightIcon className="w-5 h-5 ml-2 -mr-1 transition-transform group-hover:translate-x-1" />
                 </>
               )}
@@ -222,9 +145,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
         </div>
       </form>
       
-      <div className="text-sm text-center">
+      <div className="text-sm text-center text-gray-400">
+        Don't have an account?{' '}
         <a href="#" className="font-medium text-blue-400 hover:text-blue-300 transition-colors">
-          Forgot your password?
+          Sign Up
         </a>
       </div>
     </div>
